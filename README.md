@@ -57,7 +57,7 @@ To ensure robustness and real-world applicability, **class imbalance handling** 
 ### 2️⃣ AQI Category Merging (Research-Standard)
 To reduce ambiguity and improve prediction performance:
 
-| Original AQI Category | Merged Class |
+| Original AQI Category| Merged Class|
 |----------------------|-------------|
 | Good, Satisfactory   | Low         |
 | Moderate             | Moderate    |
@@ -133,7 +133,7 @@ To reduce ambiguity and improve prediction performance:
 
 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/climate-aqi-analysis.git
+git clone https://github.com/vansh070605/Climate-trend-and-seasonal-analysis.git
 ````
 
 2. Install dependencies
@@ -175,5 +175,3 @@ Engineering Student | Machine Learning & Data Science Enthusiast
 ---
 
 ### 🌟 If you find this project useful, don’t forget to give it a star!
-
-```
