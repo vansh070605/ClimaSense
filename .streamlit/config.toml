@@ -1,0 +1,8 @@
+[theme]
+base = "dark"
+
+primaryColor = "#00E5FF"          # cyan accent
+backgroundColor = "#0E1117"       # dark background
+secondaryBackgroundColor = "#161B22"
+textColor = "#FAFAFA"
+font = "sans serif"
