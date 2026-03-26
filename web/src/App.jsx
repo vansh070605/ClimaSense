@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 // import 'leaflet/dist/leaflet.css';
+import { QRCodeSVG } from 'qrcode.react';
 import predictions from './data/predictions.json';
 
 // Simulated Real-Time Data Hook
@@ -258,8 +259,8 @@ const ForecastView = ({ selectedCity, activeYear, setActiveYear, cityData, liveD
           </div>
         </div>
 
-        <div className="h-[350px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-[350px] w-full min-w-[0px]">
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <AreaChart data={trajData} margin={{ top: 10, right: 30, left: 0, bottom: 40 }}>
               <defs>
                 <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
@@ -478,6 +479,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('FORECAST');
   const [activeYear, setActiveYear] = useState('2026');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobileConnectOpen, setIsMobileConnectOpen] = useState(false);
   const [liveData, setLiveData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState('Syncing...');
 
@@ -506,6 +508,40 @@ export default function App() {
   }, []);
   
   const cityData = predictions[selectedCity];
+
+  const handleGenerateReport = () => {
+    const reportContent = `CLIMASENSE INTELLIGENCE REPORT
+=================================
+Generated: ${new Date().toLocaleString()}
+Node: ${selectedCity.toUpperCase()}
+Status: Pristine Climate Protocol Active
+
+--- PREDICTIVE FORECAST (${activeYear}) ---
+Risk Level: ${cityData[activeYear]?.risk || 'N/A'}
+Trend: ${cityData[activeYear]?.trend || 'N/A'}
+Overall Stress Score: ${cityData[activeYear]?.score?.toFixed(2) || 'N/A'}
+
+--- 5-YEAR TRAJECTORY ---
+${['2024', '2025', '2026', '2027', '2028'].map(y => `${y}: ${cityData[y]?.score?.toFixed(2)}`).join('\n')}
+
+--- LIVE SENSOR TELEMETRY ---
+Temp: ${liveData?.measurements?.[selectedCity]?.temp || 28.5}°C
+AQI: ${liveData?.measurements?.[selectedCity]?.aqi || 124}
+Humidity: ${liveData?.measurements?.[selectedCity]?.humidity || 45}%
+Wind Speed: ${liveData?.measurements?.[selectedCity]?.wind_speed || 12} km/h
+
+[End of Report]`;
+
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ClimaSense_Report_${selectedCity}_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans select-none text-slate-900 overflow-x-hidden">
@@ -553,7 +589,15 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden sm:inline-flex px-6 py-2.5 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-primary transition-colors shadow-lg shadow-slate-900/10">
+            <button 
+                onClick={() => setIsMobileConnectOpen(true)}
+                className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-200 transition-colors">
+                <Radio size={14} className="text-emerald-500" />
+                Connect Mobile
+            </button>
+            <button 
+                onClick={handleGenerateReport}
+                className="hidden sm:inline-flex px-6 py-2.5 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-primary transition-colors shadow-lg shadow-slate-900/10">
                 Generate Report
             </button>
             <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="lg:hidden p-2 text-slate-500">
@@ -563,11 +607,81 @@ export default function App() {
         </div>
       </nav>
 
+      {/* Mobile Connect Modal */}
+      <AnimatePresence>
+        {isMobileConnectOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              onClick={() => setIsMobileConnectOpen(false)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-white p-8 rounded-3xl shadow-2xl relative z-10 max-w-sm w-full border border-slate-100 flex flex-col items-center text-center"
+            >
+              <button 
+                onClick={() => setIsMobileConnectOpen(false)}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+              
+              <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6">
+                <Radio size={32} />
+              </div>
+              
+              <h3 className="text-xl font-display font-black text-slate-900 mb-2">Connect Mobile Device</h3>
+              <p className="text-sm text-slate-500 mb-8 font-medium">
+                Scan this QR code with your phone's camera to access the ClimaSense Intelligence Hub on the go.
+              </p>
+              
+              <div className="p-4 bg-white rounded-2xl shadow-inner border border-slate-100 mb-6 group inline-block relative overflow-hidden">
+                <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors pointer-events-none" />
+                <QRCodeSVG 
+                    value={`http://${import.meta.env.VITE_LOCAL_IP}:5176`} 
+                    size={200}
+                    bgColor={"#ffffff"}
+                    fgColor={"#0f172a"}
+                    level={"Q"}
+                    includeMargin={false}
+                />
+              </div>
+
+              <div className="bg-emerald-50 w-full p-4 rounded-2xl border border-emerald-100 flex flex-col items-center">
+                 <div className="flex items-center gap-2 mb-1">
+                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                     <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Network Active</span>
+                 </div>
+                 <span className="text-xs text-slate-500 font-mono">http://{import.meta.env.VITE_LOCAL_IP}:5176</span>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <div className="flex flex-1 relative">
+        {/* Mobile Sidebar Overlay */}
+        <AnimatePresence>
+            {isSidebarOpen && (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setSidebarOpen(false)}
+                    className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[55] lg:hidden"
+                />
+            )}
+        </AnimatePresence>
+
         {/* Sidebar */}
         <aside className={`
-          fixed inset-y-0 left-0 z-40 w-72 bg-white/90 backdrop-blur-2xl border-r border-slate-100 transition-transform duration-500 lg:relative lg:translate-x-0
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          fixed inset-y-0 left-0 z-[60] w-72 bg-white/90 backdrop-blur-2xl border-r border-slate-100 transition-transform duration-500 lg:relative lg:translate-x-0 lg:z-0
+          ${isSidebarOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
         `}>
           <div className="p-8 h-full flex flex-col">
             <div className="flex items-center justify-between mb-8">
@@ -718,7 +832,7 @@ export default function App() {
                                               if (data.detail) throw new Error(data.detail);
                                               alert(`AI Inference Result: ${data.aqi_category} (Index ${data.aqi_level})`);
                                             } catch (e) {
-                                              alert(`Inference failed: ${e.message}. Ensure FastAPI is running on port 8000.`);
+                                              alert(`Inference failed: ${e.message}. Ensure FastAPI is running on port 8001.`);
                                             }
                                           }}
                                           className="w-full py-2.5 bg-secondary text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-lg shadow-secondary/20 hover:scale-[1.02] transition-transform"
@@ -733,8 +847,8 @@ export default function App() {
                             <div className="w-full xl:w-[450px] flex flex-col gap-8">
                                 <div className="glass-panel p-8 rounded-[2.5rem] shadow-2xl h-full border border-white flex flex-col items-center justify-center">
                                     <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-8">Anomaly Spectrum Analysis</h3>
-                                    <div className="h-[300px] w-full">
-                                        <ResponsiveContainer width="100%" height="100%">
+                                    <div className="h-[300px] w-full min-w-[0px]">
+                                        <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                                             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={[
                                                 { subject: 'Temp', A: 120, fullMark: 150 },
                                                 { subject: 'Press', A: 98, fullMark: 150 },
