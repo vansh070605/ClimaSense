@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import zscore
+import os
 
 # ===================== CONFIG ===================== #
 
@@ -41,7 +42,8 @@ def risk_badge(level):
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Indian_Climate_Dataset_2024_2025.csv")
+    data_path = os.path.join(os.path.dirname(__file__), "..", "data", "Indian_Climate_Dataset_2024_2025.csv")
+    df = pd.read_csv(data_path)
     df["Date"] = pd.to_datetime(df["Date"])
     return df.sort_values(["City", "Date"])
 

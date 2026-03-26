@@ -62,36 +62,61 @@ Immersive Dashboard UI
 
 ```bash
 ClimaSense/
-├── regenerate_forecast.py    # Generates 2026-2028 predictions
-├── Climate.ipynb             # Model training & exploration
-├── Indian_Climate_Dataset... # Historical raw data (2024-25)
-└── web/                      # React/Vite Frontend
-    ├── src/
-    │   ├── data/
-    │   │   └── predictions.json # Forecaster output used by UI
-    │   └── App.jsx          # "Pristine Light" Dashboard Implementation
-    └── package.json
+├── frontend/                 # React/Vite Frontend Web App
+│   └── src/data/             # Static configurations & data for UI
+├── backend/                  # API Services & Streamlit Web App
+│   ├── main.py               # FastAPI backend serving AI intelligence
+│   └── app.py                # Streamlit Dashboard implementation
+├── data/                     # Centralized Datasets & JSON stores
+│   ├── Indian_Climate_Dat... # Raw telemetry data (2024-25)
+│   └── predictions_exten...  # Forecasted intelligence outputs
+├── ml_scripts/               # ML, Notebooks, and generator scripts
+│   ├── Climate.ipynb         # Model training notebook
+│   ├── analysis.py           # Evaluation analysis script
+│   ├── regenerate_forecas... # Generates future AI predictions
+│   └── generate_ppt.py       # Automated PPT generation
+├── models/                   # Pickled AI Models
+│   └── aqi_classifier.pkl    # Trained XGBoost AQI classification model
+├── utils/                    # Internal debugging and inspection tools
+└── launch_all.ps1            # Unified launch script
 ```
 
 ---
 
 ## 🚀 How to Start the Project
 
-### 1. (Optional) Regenerate Forecast Data
-If you change the raw dataset or model logic, run this script to update the `web/src/data/predictions.json` file:
-```bash
-python regenerate_forecast.py
+### 1. Unified Launch (Recommended)
+You can spawn all three core services (FastAPI Backend, Streamlit Dashboard, React Frontend) simultaneously using the provided PowerShell script. Just run this at the project root:
+```powershell
+.\launch_all.ps1
 ```
 
-### 2. Launch the ClimaSense Hub
-Navigate to the `web` folder, install dependencies, and start the development server:
+### 2. Manual Launch
+If you prefer starting them individually, use separate terminal windows:
+
+**FastAPI Backend**
 ```bash
-cd web
-npm install
-npm run dev -- --port 5175
+python backend/main.py
 ```
-The dashboard will be active at **http://localhost:5175/**.
-`
+
+**Streamlit Dashboard**
+```bash
+streamlit run backend/app.py
+```
+
+**React Frontend**
+Navigate to the `frontend` folder, install dependencies, and start the development server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 3. (Optional) Regenerate Forecast Data
+If you change the raw dataset or model logic, run this script to update the forecast data files:
+```bash
+python ml_scripts/regenerate_forecast.py
+```
 
 ---
 

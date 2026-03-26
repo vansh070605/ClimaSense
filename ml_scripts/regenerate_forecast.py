@@ -3,8 +3,9 @@ import numpy as np
 import json
 
 def generate_3year_forecast():
-    # Load data
-    df = pd.read_csv("Indian_Climate_Dataset_2024_2025.csv")
+    import os
+    data_path = os.path.join(os.path.dirname(__file__), "..", "data", "Indian_Climate_Dataset_2024_2025.csv")
+    df = pd.read_csv(data_path)
     df['Date'] = pd.to_datetime(df['Date'])
     
     # Calculate daily stress scores
@@ -68,9 +69,11 @@ def generate_3year_forecast():
         
         results[city] = city_results
         
-    with open("predictions_extended.json", "w") as f:
+    import os
+    out_path = os.path.join(os.path.dirname(__file__), "..", "data", "predictions_extended.json")
+    with open(out_path, "w") as f:
         json.dump(results, f, indent=4)
-    print("SUCCESS: predictions_extended.json (2024-2028) generated")
+    print(f"SUCCESS: {out_path} (2024-2028) generated")
 
 if __name__ == "__main__":
     generate_3year_forecast()

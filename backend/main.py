@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 # Load Model
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "aqi_classifier.pkl")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "models", "aqi_classifier.pkl")
 model = None
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
@@ -38,7 +38,8 @@ async def root():
 @app.get("/live")
 async def get_live_data():
     try:
-        with open("web/src/data/live_data.json", "r") as f:
+        live_data_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "data", "live_data.json")
+        with open(live_data_path, "r") as f:
             return json.load(f)
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Live data not found. Please run fetch_live_data.py")
@@ -46,7 +47,8 @@ async def get_live_data():
 @app.get("/forecast")
 async def get_forecast():
     try:
-        with open("web/src/data/predictions.json", "r") as f:
+        predictions_path = os.path.join(os.path.dirname(__file__), "..", "frontend", "src", "data", "predictions.json")
+        with open(predictions_path, "r") as f:
             return json.load(f)
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Forecast data not found. Please run Climate.ipynb")
