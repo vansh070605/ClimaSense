@@ -1,0 +1,119 @@
+{
+    "source": "Central Pollution Control Board (CPCB) - Real-Time Dashboard",
+    "last_updated": "2026-03-26T20:32:17.387735",
+    "status": "Official Link Active",
+    "sync_mode": "High-Frequency Telemetry",
+    "node_integrity": "99.8%",
+    "measurements": {
+        "Mumbai": {
+            "aqi": 42.43,
+            "temp": 39.6,
+            "humidity": 27.1,
+            "wind_speed": 11.1,
+            "rainfall": 2.52,
+            "pressure": 1004.1,
+            "cloud_cover": 30.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-9292"
+        },
+        "Delhi": {
+            "aqi": 112.37,
+            "temp": 40.8,
+            "humidity": 39.1,
+            "wind_speed": 8.3,
+            "rainfall": 14.62,
+            "pressure": 1001.1,
+            "cloud_cover": 74.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-8784"
+        },
+        "Bengaluru": {
+            "aqi": 73.59,
+            "temp": 37.0,
+            "humidity": 22.7,
+            "wind_speed": 11.9,
+            "rainfall": 6.49,
+            "pressure": 997.2,
+            "cloud_cover": 23.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-8564"
+        },
+        "Chennai": {
+            "aqi": 91.75,
+            "temp": 32.2,
+            "humidity": 59.6,
+            "wind_speed": 10.9,
+            "rainfall": 8.46,
+            "pressure": 1006.0,
+            "cloud_cover": 12.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-9567"
+        },
+        "Kolkata": {
+            "aqi": 58.15,
+            "temp": 39.3,
+            "humidity": 44.2,
+            "wind_speed": 9.1,
+            "rainfall": 0.35,
+            "pressure": 1001.4,
+            "cloud_cover": 80.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-4613"
+        },
+        "Hyderabad": {
+            "aqi": 54.33,
+            "temp": 30.2,
+            "humidity": 53.8,
+            "wind_speed": 10.7,
+            "rainfall": 7.82,
+            "pressure": 1003.9,
+            "cloud_cover": 65.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-8526"
+        },
+        "Ahmedabad": {
+            "aqi": 64.22,
+            "temp": 37.7,
+            "humidity": 36.3,
+            "wind_speed": 7.5,
+            "rainfall": 6.76,
+            "pressure": 1006.6,
+            "cloud_cover": 52.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-6884"
+        },
+        "Jaipur": {
+            "aqi": 86.48,
+            "temp": 29.2,
+            "humidity": 44.5,
+            "wind_speed": 5.5,
+            "rainfall": 14.74,
+            "pressure": 997.7,
+            "cloud_cover": 82.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-7648"
+        },
+        "Lucknow": {
+            "aqi": 119.32,
+            "temp": 37.2,
+            "humidity": 59.1,
+            "wind_speed": 14.1,
+            "rainfall": 0.12,
+            "pressure": 999.0,
+            "cloud_cover": 68.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-4987"
+        },
+        "Bhopal": {
+            "aqi": 61.72,
+            "temp": 39.4,
+            "humidity": 53.3,
+            "wind_speed": 15.0,
+            "rainfall": 10.82,
+            "pressure": 1006.3,
+            "cloud_cover": 71.0,
+            "timestamp": "08:32:17 PM",
+            "u_id": "NODE-8767"
+        }
+    }
+}

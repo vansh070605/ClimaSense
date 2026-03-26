@@ -7,142 +7,91 @@
 
 <br/>
 
-🚀 **LIVE APP**  
-👉 https://climate-stress-anomaly.streamlit.app/
+🚀 **LIVE CLIMASENSE HUB (Vite/React)**  
+👉 Currently running on **http://localhost:5175/**
 
 <br/>
 
-<img src="https://img.shields.io/badge/Status-Live-brightgreen?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Built%20With-Python-blue?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Framework-Streamlit-red?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Data-Climate-orange?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Status-Complete-brightgreen?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Built%20With-React%2019-blue?style=for-the-badge" />
+<img src="https://img.shields.io/badge/ML-Linear%20Regression-orange?style=for-the-badge" />
+<img src="https://img.shields.io/badge/GIS-Esri%20Satellite-emerald?style=for-the-badge" />
 
 </div>
 
 ---
 
-## 🤔 What is this thing?
+## 🏆 ClimaSense Intelligence Hub (Overhaul)
 
-Most weather apps tell you:  
-> *“It’s hot today.”*  
+The project has been transformed from a basic Streamlit app into a **premium, high-fidelity climate monitoring station**. It features:
 
-This app says:  
-> **“This city has been stressed for months… and here’s the data to prove it.”**
-
-### ⚡ TL;DR
-This is a **Climate Intelligence Dashboard** that:
-- Detects **heat, pollution & rainfall stress**
-- Finds **extreme climate anomalies**
-- Ranks cities using a **custom Climate Stress Index**
-- Visualizes everything in a **clean, interactive web app**
+- **📅 3-Year Forecasting (2026–2028)**: ML-driven projections for climate stress across major Indian cities.
+- **🛰️ Immersive Satellite HUD**: Real-time geospatial monitoring using Esri World Imagery with an interactive, high-tech telemetry overlay.
+- **📟 "Crazy Tech" Anomalies HUD**: Dynamic Radar Spectrum Analysis and live binary data-decryption streams for anomaly detection.
+- **🏔️ Pristine Light UI**: A professional, airy "Control Room" aesthetic with glassmorphism, soft palettes, and premium animations.
+- **⚡ Real-Time Simulation**: Simulated metric jitter and a "Scenario Simulation" mode to visualize internal calibration processes.
 
 ---
 
-## 🧠 Big Brain Features
-
-### 🔥 Climate Stress Detection
-We define **stress days** using real thresholds:
-- 🌡️ Heat Stress → Temp > 35°C & Humidity > 60%
-- 🫁 Pollution Stress → AQI ≥ 201
-- 🌧️ Rainfall Extremes → Top 5% rainfall days (city-wise)
-
----
-
-### ⚠️ Climate Anomaly Detection (Stats go brrr 📈)
-Using **Z-score based anomaly detection**:
-- Temperature spikes
-- AQI pollution surges
-- Abnormal rainfall events  
-
-Red dots = *“yeah… this day was NOT normal.”*
-
----
-
-### 📊 Climate Stress Score™ (0–100)
-A **custom-built index**, not copied from anywhere:
+## 🏗️ Architecture
 
 ```
-
-40% Heat Stress
-40% Pollution Stress
-20% Rainfall Extremes
-
-```
-
-Then we **rank cities relative to each other**, because absolute numbers lie.
-
-🔴 High Risk  
-🟡 Moderate Risk  
-🟢 Low Risk  
-
----
-
-## 🖥️ The Dashboard (aka the cool part)
-
-✨ What you get:
-- City selector
-- Animated score bar
-- Risk badges
-- Stress breakdown cards
-- Compact anomaly plots
-- Dark theme (because obviously)
-
-All running live in the browser.
-
----
-
-## 🏗️ How it works (Architecture)
-
-```
-
-CSV Climate Data
+CSV Data (2024-25)
 ↓
-Data Cleaning & Processing
+regenerate_forecast.py (ML Extrapolation)
 ↓
-Stress Flags + Anomaly Detection
+predictions.json (Data Store)
 ↓
-Climate Stress Index Calculation
+React 19 Frontend (Vite)
 ↓
-Interactive Streamlit Dashboard
-↓
-Deployed on Streamlit Cloud 🌍
-
+Immersive Dashboard UI
 ```
 
 ---
 
-## 🛠️ Tech Stack (no fluff)
+## 🛠️ Tech Stack
 
-- 🐍 Python
-- 📊 Pandas & NumPy
-- 📉 SciPy (statistical anomaly detection)
-- 📈 Matplotlib
-- 🌐 Streamlit (frontend + deployment)
+- **ML Backend**: Python (Scikit-Learn, Pandas)
+- **Frontend**: React 19, Vite, Tailwind CSS (v3)
+- **Visuals**: Framer Motion (Animations), Recharts (Analytics), Lucide-React (Icons)
+- **Geospatial**: Leaflet + Esri World Imagery
 
 ---
 
 ## 📂 Project Structure
 
+```bash
+ClimaSense/
+├── regenerate_forecast.py    # Generates 2026-2028 predictions
+├── Climate.ipynb             # Model training & exploration
+├── Indian_Climate_Dataset... # Historical raw data (2024-25)
+└── web/                      # React/Vite Frontend
+    ├── src/
+    │   ├── data/
+    │   │   └── predictions.json # Forecaster output used by UI
+    │   └── App.jsx          # "Pristine Light" Dashboard Implementation
+    └── package.json
 ```
-
-├── app.py                  # Streamlit Web App
-├── analysis.py             # Core data analysis
-├── Indian_Climate_Dataset_2024_2025.csv
-├── requirements.txt
-├── .streamlit/
-│   └── config.toml         # Dark theme config
-└── README.md               # You are here 😄
-
-````
 
 ---
 
-## 🚀 Run Locally (if you’re curious)
+## 🚀 How to Start the Project
 
+### 1. (Optional) Regenerate Forecast Data
+If you change the raw dataset or model logic, run this script to update the `web/src/data/predictions.json` file:
 ```bash
-pip install -r requirements.txt
-streamlit run app.py
-````
+python regenerate_forecast.py
+```
+
+### 2. Launch the ClimaSense Hub
+Navigate to the `web` folder, install dependencies, and start the development server:
+```bash
+cd web
+npm install
+npm run dev -- --port 5175
+```
+The dashboard will be active at **http://localhost:5175/**.
+`
 
 ---
 
