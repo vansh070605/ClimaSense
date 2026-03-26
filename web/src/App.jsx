@@ -151,17 +151,17 @@ const AnomalyHUDCard = ({ item, i }) => {
 
 // --- Content Sections ---
 
-const ForecastView = ({ selectedCity, activeYear, cityData, liveData, lastUpdated }) => {
+const ForecastView = ({ selectedCity, activeYear, setActiveYear, cityData, liveData, lastUpdated }) => {
   const [isSimulating, setIsSimulating] = useState(false);
-  const currentData = cityData[activeYear];
-  const prevData = cityData[activeYear === '2026' ? '2025' : (parseInt(activeYear) - 1).toString()];
+  const currentData = cityData[activeYear] || cityData['2026'];
+  const prevData = cityData[(parseInt(activeYear) - 1).toString()] || currentData;
   
   const trajData = useMemo(() => [
-    { name: '24', score: cityData['2024'].score },
-    { name: '25', score: cityData['2025'].score },
-    { name: '26', score: cityData['2026'].score },
-    { name: '27', score: cityData['2027'].score },
-    { name: '28', score: cityData['2028'].score },
+    { name: '2024', score: cityData['2024'].score },
+    { name: '2025', score: cityData['2025'].score },
+    { name: '2026', score: cityData['2026'].score },
+    { name: '2027', score: cityData['2027'].score },
+    { name: '2028', score: cityData['2028'].score },
   ], [cityData]);
 
   const currentTemp = useSimulation(
@@ -247,10 +247,13 @@ const ForecastView = ({ selectedCity, activeYear, cityData, liveData, lastUpdate
             <p className="text-sm text-slate-400 mt-1">Aggregated Climate Stress: 2024 Actual — 2028 Predictive Forecast</p>
           </div>
           <div className="flex gap-2">
-            {['24', '25', '26', '27', '28'].map(y => (
-                <div key={y} className={`px-3 py-1 rounded-full text-[10px] font-bold border ${y === activeYear.slice(-2) ? 'bg-primary/10 border-primary/20 text-primary' : 'bg-slate-50 border-slate-100 text-slate-400'}`}>
-                    {y === '24' || y === '25' ? 'ACTUAL' : 'PROJ'}
-                </div>
+            {['2024', '2025', '2026', '2027', '2028'].map(y => (
+                <button 
+                    key={y} 
+                    onClick={() => setActiveYear(y)}
+                    className={`px-3 py-1 rounded-full text-[10px] font-bold border cursor-pointer transition-colors ${y === activeYear ? 'bg-primary/10 border-primary/20 text-primary' : 'bg-slate-50 border-slate-100 text-slate-400 hover:bg-slate-200'}`}>
+                    {y === '2024' || y === '2025' ? `${y} ACTUAL` : `${y} PROJ`}
+                </button>
             ))}
           </div>
         </div>
@@ -615,19 +618,7 @@ export default function App() {
                 </p>
             </motion.div>
 
-            {activeTab === 'FORECAST' && (
-                <div className="flex p-1.5 bg-slate-100 rounded-2xl shadow-inner ml-auto xl:ml-0">
-                    {['2026', '2027', '2028'].map(y => (
-                    <button
-                        key={y}
-                        onClick={() => setActiveYear(y)}
-                        className={`px-8 py-3 rounded-xl text-[11px] font-bold transition-all ${activeYear === y ? 'bg-white text-primary shadow-sm scale-100' : 'text-slate-500 hover:text-slate-900'}`}
-                    >
-                        {y}
-                    </button>
-                    ))}
-                </div>
-            )}
+
           </div>
 
           {/* Dynamic Sections */}
@@ -639,7 +630,7 @@ export default function App() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
             >
-                {activeTab === 'FORECAST' && <ForecastView selectedCity={selectedCity} activeYear={activeYear} cityData={cityData} liveData={liveData} lastUpdated={lastUpdated} />}
+                {activeTab === 'FORECAST' && <ForecastView selectedCity={selectedCity} activeYear={activeYear} setActiveYear={setActiveYear} cityData={cityData} liveData={liveData} lastUpdated={lastUpdated} />}
                 {activeTab === 'SATELLITE' && <SatelliteView city={selectedCity} selectedCity={selectedCity} liveData={liveData} />}
                 {activeTab === 'ANOMALIES' && (
                     <div className="relative bg-white rounded-[3rem] border border-slate-100 shadow-2xl min-h-[700px] overflow-hidden">
