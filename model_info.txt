@@ -1,0 +1,13 @@
+Loading model from e:\CODING\ClimaSense\models\xgboost_aqi_model.pkl
+Model type: <class 'xgboost.sklearn.XGBClassifier'>
+Features found:
+ - PM2.5
+ - PM10
+ - NO2
+ - CO
+ - SO2
+ - O3
+ - Month
+
+Loading encoder from e:\CODING\ClimaSense\models\label_encoder.pkl
+Encoder classes: ['Good', 'Moderate', 'Poor', 'Satisfactory', 'Severe', 'Very Poor']
